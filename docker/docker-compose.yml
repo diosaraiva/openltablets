@@ -1,0 +1,50 @@
+name: openltablets
+
+services:
+
+  # Demo
+  openl-demo:
+    container_name: openl-demo
+    image: openltablets/demo
+    ports:
+      - 9080:8080
+    networks:
+      - docker-network
+
+#  # Rule Services
+#  openl-ruleservice:
+#    container_name: openl-ruleservice
+#    image: openltablets/ws:latest
+#    ports:
+#      - 9080:8080
+#    networks:
+#      - docker-network
+
+#  # Web Studio
+#  openl-webstudio:
+#    container_name: openl-webstudio
+#    image: openltablets/webstudio
+#    ports:
+#      - 9080:8080
+#    networks:
+#      - docker-network
+
+  # Portainer
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    restart: unless-stopped
+    ports:
+      - 9443:9443
+    networks:
+      - docker-network
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - vol_portainer:/data
+
+networks:
+  docker-network:
+    driver: bridge
+
+volumes:
+  vol_portainer:
